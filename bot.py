@@ -2,7 +2,7 @@ import asyncio
 from pyrogram import Client, filters
 from pyrogram.types import Message
 from pytgcalls import PyTgCalls
-from pytgcalls.types import AudioPiped, VideoPiped
+from pytgcalls.types import MediaStream
 import os
 
 API_ID = int(os.environ.get("API_ID"))
@@ -24,10 +24,7 @@ async def stream_cmd(client: Client, message: Message):
     await message.reply("⏳ Stream başlayır...")
 
     try:
-        await tgcalls.join_group_call(
-            chat_id,
-            AudioPiped(url)
-        )
+        await tgcalls.play(chat_id, MediaStream(url))
         await message.reply(f"▶️ Stream başladı:\n`{url}`")
     except Exception as e:
         await message.reply(f"❌ Xəta: {e}")
@@ -35,7 +32,7 @@ async def stream_cmd(client: Client, message: Message):
 @bot.on_message(filters.command("stop") & filters.group)
 async def stop_cmd(client: Client, message: Message):
     try:
-        await tgcalls.leave_group_call(message.chat.id)
+        await tgcalls.leave_call(message.chat.id)
         await message.reply("⏹ Stream dayandırıldı.")
     except Exception as e:
         await message.reply(f"❌ Xəta: {e}")
@@ -48,3 +45,5 @@ async def main():
     await asyncio.gather(userbot.idle(), bot.idle())
 
 asyncio.run(main())
+```
+
