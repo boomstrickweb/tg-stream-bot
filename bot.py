@@ -18,10 +18,27 @@ async def stream_cmd(client: Client, message: Message):
     if len(message.command) < 2:
         await message.reply("İstifadə: `/stream <video_url>`")
         return
+
     url = message.command[1]
-    await message.reply("⏳ Stream başlayır...")
+    chat_id = message.chat.id
+    await message.reply("⏳ Video Chat açılır və stream başlayır...")
+
     try:
-        await tgcalls.play(message.chat.id, MediaStream(url))
+        # Video Chat-ı userbot vasitəsilə avtomatik aç
+        await userbot.invoke(
+            __import__('pyrogram.raw.functions.phone', fromlist=['CreateGroupCall'])
+            .CreateGroupCall(
+                peer=await userbot.resolve_peer(chat_id),
+                random_id=__import__('random').randint(10000, 99999)
+            )
+        )
+    except Exception:
+        pass  # Artıq açıqdırsa xəta verməsin
+
+    await asyncio.sleep(2)
+
+    try:
+        await tgcalls.play(chat_id, MediaStream(url))
         await message.reply(f"▶️ Stream başladı:\n`{url}`")
     except Exception as e:
         await message.reply(f"❌ Xəta: {e}")
@@ -42,8 +59,3 @@ async def main():
     await asyncio.gather(userbot.idle(), bot.idle())
 
 asyncio.run(main())
-```
-
-**`Procfile`** (Railway üçün):
-```
-worker: python bot.py
