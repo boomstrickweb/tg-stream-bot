@@ -1,0 +1,2 @@
+[phases.install]
+cmds = ["pip install pyrogram==2.0.106 tgcrypto==1.2.5 py-tgcalls==0.9.0"]
