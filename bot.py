@@ -43,6 +43,6 @@ async def main():
     await bot.start()
     await tgcalls.start()
     print("✅ Bot işləyir...")
-    await asyncio.gather(userbot.idle(), bot.idle())
+    await asyncio.Event().wait()
 
 asyncio.run(main())
