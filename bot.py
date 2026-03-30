@@ -45,5 +45,4 @@ async def main():
     await asyncio.gather(userbot.idle(), bot.idle())
 
 asyncio.run(main())
-```
 
