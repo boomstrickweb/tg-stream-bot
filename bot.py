@@ -1,9 +1,9 @@
 import asyncio
+import os
 from pyrogram import Client, filters
 from pyrogram.types import Message
 from pytgcalls import PyTgCalls
 from pytgcalls.types import MediaStream
-import os
 
 API_ID = int(os.environ.get("API_ID"))
 API_HASH = os.environ.get("API_HASH")
@@ -16,19 +16,18 @@ tgcalls = PyTgCalls(userbot)
 
 @bot.on_message(filters.command("start"))
 async def start(client: Client, message: Message):
-    await message.reply("✅ Bot işləyir!")
+    await message.reply("✅ Salam!")
 
 @bot.on_message(filters.command("stream"))
 async def stream_cmd(client: Client, message: Message):
     if len(message.command) < 2:
-        await message.reply("İstifadə: `/stream <video_url>`")
+        await message.reply("İstifadə: /stream <url>")
         return
     url = message.command[1]
-    chat_id = message.chat.id
-    await message.reply("⏳ Stream başlayır...")
+    await message.reply("⏳ Başlayır...")
     try:
-        await tgcalls.play(chat_id, MediaStream(url))
-        await message.reply(f"▶️ Stream başladı:\n`{url}`")
+        await tgcalls.play(message.chat.id, MediaStream(url))
+        await message.reply("▶️ Stream başladı!")
     except Exception as e:
         await message.reply(f"❌ Xəta: {e}")
 
@@ -36,7 +35,7 @@ async def stream_cmd(client: Client, message: Message):
 async def stop_cmd(client: Client, message: Message):
     try:
         await tgcalls.leave_call(message.chat.id)
-        await message.reply("⏹ Stream dayandırıldı.")
+        await message.reply("⏹ Dayandı.")
     except Exception as e:
         await message.reply(f"❌ Xəta: {e}")
 
