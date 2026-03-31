@@ -39,11 +39,10 @@ async def stop_cmd(client: Client, message: Message):
     except Exception as e:
         await message.reply(f"❌ Xəta: {e}")
 
-async def main():
+async def start_services():
     await userbot.start()
     await tgcalls.start()
-    await bot.start()
-    print("✅ Bot işləyir...")
-    await asyncio.Event().wait()
+    print("✅ Userbot və tgcalls başladı!")
 
-asyncio.run(main())
+bot.loop.run_until_complete(start_services())
+bot.run()
