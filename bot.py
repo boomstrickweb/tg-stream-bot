@@ -24,12 +24,14 @@ async def stream_cmd(client: Client, message: Message):
         await message.reply("İstifadə: /stream <url>")
         return
     url = message.command[1]
-    await message.reply("⏳ Başlayır...")
+    await message.reply("⏳ Link yoxlanılır...")
     try:
-        await tgcalls.play(
-            message.chat.id,
-            MediaStream(url)
-        )
+        import yt_dlp
+        ydl_opts = {'format': 'best', 'quiet': True}
+        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+            info = ydl.extract_info(url, download=False)
+            stream_url = info['url']
+        await tgcalls.play(message.chat.id, MediaStream(stream_url))
         await message.reply("▶️ Stream başladı!")
     except Exception as e:
         await message.reply(f"❌ Xəta: {e}")
