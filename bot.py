@@ -26,7 +26,10 @@ async def stream_cmd(client: Client, message: Message):
     url = message.command[1]
     await message.reply("⏳ Başlayır...")
     try:
-        await tgcalls.play(message.chat.id, MediaStream(url))
+        await tgcalls.play(
+            message.chat.id,
+            MediaStream(url)
+        )
         await message.reply("▶️ Stream başladı!")
     except Exception as e:
         await message.reply(f"❌ Xəta: {e}")
