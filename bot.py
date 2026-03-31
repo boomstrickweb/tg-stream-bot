@@ -1,3 +1,4 @@
+import asyncio
 import os
 from pyrogram import Client, filters
 from pyrogram.types import Message
@@ -38,4 +39,11 @@ async def stop_cmd(client: Client, message: Message):
     except Exception as e:
         await message.reply(f"❌ Xəta: {e}")
 
-bot.run()
+async def main():
+    await userbot.start()
+    await tgcalls.start()
+    await bot.start()
+    print("✅ Bot işləyir...")
+    await asyncio.Event().wait()
+
+asyncio.run(main())
