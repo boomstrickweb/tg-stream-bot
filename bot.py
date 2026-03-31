@@ -46,3 +46,8 @@ async def main():
     await asyncio.Event().wait()
 
 asyncio.run(main())
+
+@bot.on_message(filters.command("stream") & filters.group)
+async def stream_cmd(client: Client, message: Message):
+    print(f"Komanda qəbul edildi: {message.chat.id}")
+    ...
