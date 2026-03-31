@@ -19,6 +19,5 @@ async def main():
     await userbot.start()
     await bot.start()
     print("✅ Bot başladı")
+    print(f"Bot username: {bot.me.username}")
     await asyncio.Event().wait()
-
-asyncio.run(main())
