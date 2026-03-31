@@ -18,7 +18,7 @@ tgcalls = PyTgCalls(userbot)
 async def start(client: Client, message: Message):
     await message.reply("✅ Bot işləyir!")
 
-@bot.on_message(filters.command("stream") & filters.group)
+@bot.on_message(filters.command("stream"))
 async def stream_cmd(client: Client, message: Message):
     if len(message.command) < 2:
         await message.reply("İstifadə: `/stream <video_url>`")
@@ -32,7 +32,7 @@ async def stream_cmd(client: Client, message: Message):
     except Exception as e:
         await message.reply(f"❌ Xəta: {e}")
 
-@bot.on_message(filters.command("stop") & filters.group)
+@bot.on_message(filters.command("stop"))
 async def stop_cmd(client: Client, message: Message):
     try:
         await tgcalls.leave_call(message.chat.id)
